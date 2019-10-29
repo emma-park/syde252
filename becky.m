@@ -15,7 +15,6 @@ function [data, sampleRate] = readFile(wavFile, newWavFile)
     end
 
     audiowrite(newWavFile, data, sampleRate);
-    %clear y sampleRate
     
     %plot soundfile
     figure();

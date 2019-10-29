@@ -1,5 +1,5 @@
-close all
-clear all
+close all;
+clear all;
 clc
 
 [sample, rate] = readFile('becky.wav', 'newFile.wav');
@@ -14,17 +14,16 @@ function [data, sampleRate] = readFile(wavFile, newWavFile)
         data = data(:, 1) + data(:, 2); %sum(y, 2) also accomplishes this
     end
 
-%     player = audioplayer(data, sampleRate);
-%     play(player);
-
     audiowrite(newWavFile, data, sampleRate);
     %clear y sampleRate
     
-%     %plot soundfile
-%     h = stem(data);
-%     set(h, 'Marker', 'none')
 
-    %downsample
+    %plot soundfile
+    figure();
+    h = stem(data);
+    set(h, 'Marker', 'none');
+    
+    %downsample if sample rate is over 16000
     if sampleRate < 16000
         fprintf("sample rate too small");
     else
@@ -35,7 +34,7 @@ function [data, sampleRate] = readFile(wavFile, newWavFile)
     
     time = numSamples/sampleRate;
     freq = 1000;
-    t = 0:1/10000:time;
+    t = 0:1/sampleRate:time/10;
     a=cos(2 .* pi .* freq .* t);
     %play sound
     sound(a, 1600);
@@ -43,6 +42,7 @@ function [data, sampleRate] = readFile(wavFile, newWavFile)
     %change range of t to plot only 2 periods
     t = 0:1/sampleRate:1/500; % where T=1/f, so 2T=1/500
     a=cos(2 .* pi .* freq .* t);
-    plot(t,a)
+    figure();
+    plot(t,a);
 end
 

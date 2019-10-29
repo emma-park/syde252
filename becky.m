@@ -1,23 +1,48 @@
+close all
 clear all
+clc
 
-myWav = 'becky.wav';
-newWavFile = 'newFile.wav';
-[x, Fs] = audioread(myWav);
+[sample, rate] = readFile('becky.wav', 'newFile.wav');
 
-[m, n] = size(x); %gives dimensions of array where n is the number of stereo channels
+function [data, sampleRate] = readFile(wavFile, newWavFile)
+    [data, sampleRate] = audioread(wavFile);
 
-if n == 2
-    y = x(:, 1) + x(:, 2); %sum(y, 2) also accomplishes this
+    [numSamples, n] = size(data); %gives dimensions of array where n is the number of stereo channels
+    
+    %if stereo, combine to create single channel
+    if n == 2
+        data = data(:, 1) + data(:, 2); %sum(y, 2) also accomplishes this
+    end
+
+%     player = audioplayer(data, sampleRate);
+%     play(player);
+
+    audiowrite(newWavFile, data, sampleRate);
+    %clear y sampleRate
+    
+%     %plot soundfile
+%     h = stem(data);
+%     set(h, 'Marker', 'none')
+
+    %downsample
+    if sampleRate < 16000
+        fprintf("sample rate too small");
+    else
+        data = resample(data, 16000, sampleRate); %resample into 16kHz
+        sampleRate = 16000;
+        [numSamples, n] = size(data);
+    end
+    
+    time = numSamples/sampleRate;
+    freq = 1000;
+    t = 0:1/10000:time;
+    a=cos(2 .* pi .* freq .* t);
+    %play sound
+    sound(a, 1600);
+    
+    %change range of t to plot only 2 periods
+    t = 0:1/sampleRate:1/500; % where T=1/f, so 2T=1/500
+    a=cos(2 .* pi .* freq .* t);
+    plot(t,a)
 end
-
-player = audioplayer(y, Fs);
-play(player);
-
-audiowrite(newWavFile, y, Fs); 
-
-h = stem(y);
-set(h, 'Marker', 'none')
-
-%downsample
-S1 = resample(x, 16000, Fs); %resample into 16kHz
 

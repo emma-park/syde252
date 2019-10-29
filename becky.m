@@ -17,7 +17,6 @@ function [data, sampleRate] = readFile(wavFile, newWavFile)
     audiowrite(newWavFile, data, sampleRate);
     %clear y sampleRate
     
-
     %plot soundfile
     figure();
     h = stem(data);

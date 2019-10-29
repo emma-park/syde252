@@ -2,9 +2,17 @@ close all;
 clear all;
 clc
 
-[sample, rate] = readFile('becky.wav', 'newFile.wav');
+readFile('File1.wav', 'newFile1.wav');
+readFile('File2.wav', 'newFile2.wav');
+readFile('File3.wav', 'newFile3.wav');
+readFile('File4.wav', 'newFile4.wav');
+readFile('File5.wav', 'newFile5.wav');
+readFile('File6.wav', 'newFile6.wav');
+readFile('File7.wav', 'newFile7.wav');
+readFile('File8.wav', 'newFile8.wav');
+readFile('File9.wav', 'newFile9.wav');
 
-function [data, sampleRate] = readFile(wavFile, newWavFile)
+function readFile(wavFile, newWavFile)
     [data, sampleRate] = audioread(wavFile);
 
     [numSamples, n] = size(data); %gives dimensions of array where n is the number of stereo channels
@@ -15,11 +23,12 @@ function [data, sampleRate] = readFile(wavFile, newWavFile)
     end
 
     audiowrite(newWavFile, data, sampleRate);
-    
-    %plot soundfile
+
+    %set() plots soundfile
     figure();
     h = stem(data);
     set(h, 'Marker', 'none');
+    title(wavFile);
     
     %downsample if sample rate is over 16000
     if sampleRate < 16000
@@ -42,5 +51,6 @@ function [data, sampleRate] = readFile(wavFile, newWavFile)
     a=cos(2 .* pi .* freq .* t);
     figure();
     plot(t,a);
+    title (wavFile);
 end
 

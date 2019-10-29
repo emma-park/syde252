@@ -25,17 +25,24 @@ function [data, sampleRate] = readFile(wavFile, newWavFile)
 %     set(h, 'Marker', 'none')
 
     %downsample
-    resampledData = resample(data, 16000, sampleRate); %resample into 16kHz    
+    if sampleRate < 16000
+        fprintf("sample rate too small");
+    else
+        data = resample(data, 16000, sampleRate); %resample into 16kHz
+        sampleRate = 16000;
+        [numSamples, n] = size(data);
+    end
     
-    time = numSamples/sampleRate
-
-    amp = 5; 
+    time = numSamples/sampleRate;
     freq = 1000;
-    t = 0:1/sampleRate:time;
-    a=amp.*cos(2 .* pi .* freq .* t);
-    sound(a);   
+    t = 0:1/10000:time;
+    a=cos(2 .* pi .* freq .* t);
+    %play sound
+    sound(a, 1600);
     
-    %plot(t,a)
-
+    %change range of t to plot only 2 periods
+    t = 0:1/sampleRate:1/500; % where T=1/f, so 2T=1/500
+    a=cos(2 .* pi .* freq .* t);
+    plot(t,a)
 end
 

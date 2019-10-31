@@ -28,7 +28,9 @@ function readFile(wavFile, newWavFile)
     figure();
     h = stem(data);
     set(h, 'Marker', 'none');
-    title(wavFile);
+    name = wavFile(1:end-4); %new name for use in title and figure name
+    title(name);
+    savefig(join([name, 'sound']));
     
     %downsample if sample rate is over 16000
     if sampleRate < 16000
@@ -51,6 +53,8 @@ function readFile(wavFile, newWavFile)
     a=cos(2 .* pi .* freq .* t);
     figure();
     plot(t,a);
-    title (wavFile);
+    title (name);
+    savefig(join([name, 'cos']));
+
 end
 

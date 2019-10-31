@@ -19,7 +19,7 @@ function readFile(wavFile, newWavFile)
     
     %if stereo, combine to create single channel
     if n == 2
-        data = data(:, 1) + data(:, 2); %sum(y, 2) also accomplishes this
+        data = sum(data,2)/2;
     end
 
     audiowrite(newWavFile, data, sampleRate);
@@ -36,7 +36,7 @@ function readFile(wavFile, newWavFile)
     else
         data = resample(data, 16000, sampleRate); %resample into 16kHz
         sampleRate = 16000;
-        [numSamples, n] = size(data);
+        [numSamples, ~] = size(data);
     end
     
     time = numSamples/sampleRate;

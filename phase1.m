@@ -46,7 +46,7 @@ function readFile(wavFile, newWavFile)
     t = 0:1/sampleRate:time/10;
     a=cos(2 .* pi .* freq .* t);
     %play sound
-    sound(a, 1600);
+    sound(a, sampleRate);
     
     %change range of t to plot only 2 periods
     t = 0:1/sampleRate:1/500; % where T=1/f, so 2T=1/500

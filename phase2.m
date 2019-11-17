@@ -39,7 +39,7 @@ function readFile(wavFile, newWavFile)
 
         %task 5
         %filter out non-bandpass frequencies
-        outFilter = bandpass(data, freqRange, sampleRate);
+        outFilter = bandpass(data, freqRange, sampleRate, 'ImpulseResponse', 'iir');
         
         %task 6
         if i==1 || i==7

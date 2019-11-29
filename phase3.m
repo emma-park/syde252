@@ -2,15 +2,15 @@ close all;
 clear all;
 clc;
 
-readFile('File1.wav', 'newFile1.wav');
-readFile('File2.wav', 'newFile2.wav');
-readFile('File3.wav', 'newFile3.wav');
-readFile('File4.wav', 'newFile4.wav');
-readFile('File5.wav', 'newFile5.wav');
-readFile('File6.wav', 'newFile6.wav');
-readFile('File7.wav', 'newFile7.wav');
-readFile('File8.wav', 'newFile8.wav');
-readFile('File9.wav', 'newFile9.wav');
+readFile('File1.wav', 'newFile116.wav');
+readFile('File2.wav', 'newFile216.wav');
+readFile('File3.wav', 'newFile316.wav');
+readFile('File4.wav', 'newFile416.wav');
+readFile('File5.wav', 'newFile516.wav');
+readFile('File6.wav', 'newFile616.wav');
+readFile('File7.wav', 'newFile716.wav');
+readFile('File8.wav', 'newFile816.wav');
+readFile('File9.wav', 'newFile916.wav');
 
 
 function readFile(wavFile, newWaveFile)
@@ -36,12 +36,12 @@ function readFile(wavFile, newWaveFile)
    % task 11
    %filter out non-bandpass frequencies
 
-    for i=1:7
+    for i=1:15
 
-        rangeStart = (i-1) .* 987.5 + 100;
-        rangeEnd = rangeStart + 987.5;
+        rangeStart = (i-1) .* 493.75 + 100;
+        rangeEnd = rangeStart + 493.75;
         freqRange = [rangeStart rangeEnd];
-        outFilter = abs(bandpass(data, freqRange, sampleRate, 'ImpulseResponse', 'iir'));
+        outFilter = abs(bandpass(data, freqRange, sampleRate, 'ImpulseResponse', 'fir'));
         [numSamples, ~] = size(outFilter);
         t=0:1:numSamples-1;
         

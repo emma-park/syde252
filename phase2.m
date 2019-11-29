@@ -4,13 +4,13 @@ clc
 
 readFile('File1.wav', 'newFile1.wav');
 readFile('File2.wav', 'newFile2.wav');
-readFile('File3.wav', 'newFile3.wav');
-readFile('File4.wav', 'newFile4.wav');
-readFile('File5.wav', 'newFile5.wav');
-readFile('File6.wav', 'newFile6.wav');
-readFile('File7.wav', 'newFile7.wav');
-readFile('File8.wav', 'newFile8.wav');
-readFile('File9.wav', 'newFile9.wav');
+% readFile('File3.wav', 'newFile3.wav');
+% readFile('File4.wav', 'newFile4.wav');
+% readFile('File5.wav', 'newFile5.wav');
+% readFile('File6.wav', 'newFile6.wav');
+% readFile('File7.wav', 'newFile7.wav');
+% readFile('File8.wav', 'newFile8.wav');
+% readFile('File9.wav', 'newFile9.wav');
 
 
 function readFile(wavFile, newWavFile)

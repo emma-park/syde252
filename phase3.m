@@ -2,11 +2,7 @@ close all;
 clear all;
 clc;
 
-close all;
-clear all;
-clc
-
-readFile('File1.wav', 'newFile1.wav');
+readFile('File1.wav');
 % readFile('File2.wav', 'newFile2.wav');
 % readFile('File3.wav', 'newFile3.wav');
 % readFile('File4.wav', 'newFile4.wav');
@@ -17,7 +13,7 @@ readFile('File1.wav', 'newFile1.wav');
 % readFile('File9.wav', 'newFile9.wav');
 
 
-function readFile(wavFile, newWavFile)
+function readFile(wavFile)
     [data, sampleRate] = audioread(wavFile);
 
     [numSamples, n] = size(data); %gives dimensions of array where n is the number of stereo channels
@@ -28,21 +24,20 @@ function readFile(wavFile, newWavFile)
     end
 
        %downsample if sample rate is over 16000
- if sampleRate < 16000
+    if sampleRate < 16000
         fprintf("sample rate too small");
     else
         data = resample(data, 16000, sampleRate); %resample into 16kHz
         sampleRate = 16000;
         [numSamples, ~] = size(data);
- end
+    end
  
-    %this is probably wrong lol idk???
-    time=numSamples/sampleRate;
-    t=0:1/sampleRate:1/time;
+    t=0:numSamples/sampleRate:numSamples;
     
     for i=1:7
         rangeStart = (i-1) .* 987.5 + 100;
         rangeEnd = rangeStart + 987.5;
+        freqRange = [rangeStart rangeEnd];
         
         %task 10
         centralFreq=(rangeStart+rangeEnd)/2;
@@ -51,7 +46,12 @@ function readFile(wavFile, newWavFile)
 %         plot(t,a)
 
         % task 11
-        ampModSig=lowpass(Sig,400,sampleRate)
+        %filter out non-bandpass frequencies
+        outFilter = abs(bandpass(data, freqRange, sampleRate, 'ImpulseResponse', 'iir'));
+        %task 8
+        outFilter = lowpass(outFilter, 400, sampleRate);
+        
+        ampModSig= Sig .* outFilter;
         
         %task12
         if i==1
@@ -62,10 +62,10 @@ function readFile(wavFile, newWavFile)
     end  
     
     %task 13
-    sound(outputSig, sampleRate);
+%     sound(outputSig, sampleRate)
     %probably should figure out a way to change the name? maybe function
     %param or something
-    audiowrite('sound.wav',outputSig,sampleRate)
+%     audiowrite('sound.wav',outputSig,sampleRate)
 
 
 end

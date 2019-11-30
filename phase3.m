@@ -2,16 +2,16 @@ close all;
 clear all;
 clc;
 
-readFile('File1.wav', 'newFile116.wav');
-readFile('File2.wav', 'newFile216.wav');
-readFile('File3.wav', 'newFile316.wav');
-readFile('File4.wav', 'newFile416.wav');
-readFile('File5.wav', 'newFile516.wav');
-readFile('File6.wav', 'newFile616.wav');
-readFile('File7.wav', 'newFile716.wav');
-readFile('File8.wav', 'newFile816.wav');
-readFile('File9.wav', 'newFile916.wav');
-
+readFile('File1.wav', 'newFile1.wav');
+readFile('File2.wav', 'newFile2.wav');
+readFile('File3.wav', 'newFile3.wav');
+readFile('File4.wav', 'newFile4.wav');
+readFile('File5.wav', 'newFile5.wav');
+readFile('File6.wav', 'newFile6.wav');
+readFile('File7.wav', 'newFile7.wav');
+readFile('File8.wav', 'newFile8.wav');
+readFile('File9.wav', 'newFile9.wav');
+ 
 
 function readFile(wavFile, newWaveFile)
     [data, sampleRate] = audioread(wavFile);
@@ -35,11 +35,12 @@ function readFile(wavFile, newWaveFile)
     
    % task 11
    %filter out non-bandpass frequencies
+   numChannels=16;   
 
-    for i=1:15
+    for i=1:numChannels-1
 
-        rangeStart = (i-1) .* 493.75 + 100;
-        rangeEnd = rangeStart + 493.75;
+        rangeStart = (i-1) .* (7900/numChannels) + 100;
+        rangeEnd = rangeStart + (7900/numChannels);
         freqRange = [rangeStart rangeEnd];
         outFilter = abs(bandpass(data, freqRange, sampleRate, 'ImpulseResponse', 'fir'));
         [numSamples, ~] = size(outFilter);
@@ -66,8 +67,7 @@ function readFile(wavFile, newWaveFile)
     end  
     
     %task 13
- %   sound(outputSig, sampleRate)
-
+    sound(outputSig, sampleRate)
     audiowrite(newWaveFile,outputSig,sampleRate)
 
 
